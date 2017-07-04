@@ -47,22 +47,6 @@ describe('User', function() {
         });
     });
 
-    // it('login failed', function(done){
-    //     agent
-    //     .post('/login')
-    //     .set('Accept', 'application/json')
-    //     .send({"username": "12345", "password": "testy"})
-    //     .end(function(err, res){
-    //         if(err) console.log(err);
-
-    //         // console.log(res.body);
-
-    //         res.should.have.property('status', 401);
-
-    //         done();
-    //     })
-    // });
-
     it('registration', function(done){
         agent
         .post('/register')
