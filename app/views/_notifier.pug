@@ -1,0 +1,7 @@
+div#notifier
+    if(sessFlash.length > 0)
+        div(class="alert alert-info fade in")
+            a(href="#", class="close", data-dismiss="alert") &times;
+            span #{sessFlash}
+
+    div#sktNotifier

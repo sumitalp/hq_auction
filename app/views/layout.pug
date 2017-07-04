@@ -1,0 +1,56 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1.0')
+    link(href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css', rel='stylesheet', media='screen')
+    link(rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css")
+    link(rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous")
+    
+    if(session && session.user)
+        script.
+            var userId = "#{session.user._id}";    
+        
+  body
+    nav(class="navbar navbar-inverse")
+        .container-fluid
+            .navbar-header
+                button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+                    span(class="sr-only") Toggle navigation
+                    span(class="icon-bar")
+                    span(class="icon-bar")
+                    span(class="icon-bar")
+                a(class="navbar-brand" href="/") Room Auction
+            div(class="collapse navbar-collapse" id="bs-example-navbar-collapse-1")
+                ul(class="nav navbar-nav navbar-right")
+                    li
+                        div(class="navbar-text")
+                            if (!session && !session.user)
+                                a(href="/login") Login
+                                |
+                                | |
+                                |
+                                a(href="/register") Register
+                            if (session && session.user)
+                                span #{session.passport.user}
+                                |
+                                | |
+                                |
+                                a(href="/logout") Logout
+    
+    include _notifier.pug
+
+    block content
+
+  script(src='http://code.jquery.com/jquery.js')
+  script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js')
+  script(src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous")
+  script(src="/javascripts/jquery-ui-timepicker-addon.js")
+  script(src="/socket.io/socket.io.js")
+  script(src="/javascripts/custom.js")
+
+  block custom_resources
+
+
