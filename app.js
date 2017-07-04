@@ -24,6 +24,8 @@ var env = process.env.NODE_ENV || 'production'
 mongoose.Promise = global.Promise;
 var db = mongoose.connect(config.db);
 
+console.log(env);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

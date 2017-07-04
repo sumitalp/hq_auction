@@ -30,6 +30,12 @@ server.on('error', onError);
 server.on('listening', onListening);
 
 /**
+ * Create socket.io server.
+ */
+
+var io = app.io.attach(server);
+
+/**
  * Normalize a port into a number, string, or false.
  */
 
@@ -88,3 +94,14 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
 }
+
+// Handler Socket.io operations
+io.on('connection', function(client) {  
+    console.log('Client connected...');
+
+    global.socket = client;
+
+    client.on('join', function(data) {
+        console.log(data);
+    });
+});

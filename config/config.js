@@ -10,6 +10,9 @@ module.exports = {
     },   
     login_redirect: '/auction',
     secret: 'ilovenodeexpress',
+    cookie: {
+      domain: 'localhost'
+    }
   },
   production: {
     db: 'mongodb://localhost/auction',
@@ -19,6 +22,9 @@ module.exports = {
     },
     login_redirect: '/auction',  
     secret: 'ilovenodeexpress',  
+    cookie: {
+      domain: 'localhost'
+    }
   },
   test: {
     db: 'mongodb://localhost/test_auction',
@@ -28,6 +34,9 @@ module.exports = {
     },
     login_redirect: '/auction',  
     secret: 'ilovenodeexpress',  
+    cookie: {
+      domain: 'localhost'
+    }
   }
   
 }
