@@ -123,16 +123,63 @@ exports.create = function(req, res){
                             });
                         }
                     });
-                    
+    
                 }
             });
-            
-            
 
         });
         
     });
     
+}
+
+exports.isWinner = function(req, res){
+    res.set('Content-Type', 'text/plain');
+
+    Bid.findById(req.params.id)
+    .populate('auction')
+    .exec(function(err, bid){
+        if(err){
+            return next(err);
+        }
+
+        if(bid.auction.min_bids > bid.price){
+            res.end('Bid price is lower than minimum bid.');
+        }
+
+        Bid.findOne({auction: bid.auction, created: {$lt: bid.created}})
+        .sort({created: -1}).limit(1).exec(function(err, lastBid){
+            if(err) console.log(err);
+
+            Bid.find({auction: bid.auction, created: {$gt: bid.created}})
+            .sort({created: 1}).exec(function(err, nextBids){
+                if(err) console.log(err);
+
+                console.log(nextBids);
+                if(nextBids.length > 0 && nextBids){
+                    var nextBid = nextBids[nextBids.length - 1];
+                    var diffPercent = bid.price * 0.05;
+                    console.log(nextBid.price - bid.price >= diffPercent);
+                    if (nextBid.price - bid.price >= diffPercent){
+                        res.end('This bid is no longer winner.');
+                    }
+                    res.end('This bid is winner.');
+                } else if(lastBid) {
+                    console.log('Inside Last Bid');
+                    var diffLast = lastBid.price * 0.05;
+                    console.log(bid.price, lastBid.price, diffLast);
+                    if(bid.price - lastBid.price >= diffLast){
+                        res.end('This bid is winner.');
+                    }
+                    res.end('This bid is no longer winner.');
+                } else {
+                    res.end('');
+                }
+
+            });
+        });
+        
+    });
 }
 
 exports.list = function(req, res){
