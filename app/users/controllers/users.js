@@ -51,7 +51,7 @@ exports.login = function(req, res){
 };
 
 exports.authenticate = function(req, res){
-    console.log(res.headers);
+    // console.log(res.headers);
 	res.format({
         html: function(){
             res.redirect('/auction');

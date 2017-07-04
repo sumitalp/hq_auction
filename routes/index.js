@@ -19,4 +19,11 @@ router.get('/', function(req, res, next) {
   res.render(resourcePath + 'index', {});
 });
 
+// User URL
+router.get('/register', userCtl.registration);
+router.post('/register', userCtl.create);
+router.get('/login', userCtl.login);
+router.post('/login', passport.authenticate('local'), userCtl.authenticate);
+router.get('/logout', userCtl.logout);
+
 module.exports = router;
