@@ -1,0 +1,46 @@
+extends ../../views/layout
+
+block content
+    .container
+        
+        if (auction)
+            <!-- Modal Section -->
+            div(id="bidModal", class="modal fade", role="dialog", aria-hidden="true", tabindex="-1", aria-labelledby="bidModalLabel")
+                div(class="modal-dialog", role="document")
+                    div(class="modal-content")
+                        div(class="modal-header")
+                            h5.modal-title New Bid
+                            //- button(type="button", class="close", data-dismiss="modal", aria-label="Close")
+                                span(aria-hidden="true") &times;
+                    
+                        div(class="modal-body")
+                            form(method="POST", action="/bid/create")
+                                .form-group
+                                    label(for="bid-price", class="form-control-label") Price:
+                                    input(type="number", class="form-control", id="price", name="price")
+                                    input(type="hidden", value=auction._id, name="auction_id")
+                    
+                        div(class="modal-footer")
+                            button(type="button", class="btn btn-secondary", data-dismiss="modal") Close
+                            button(type="submit", class="btn btn-primary") Submit
+
+            div(class="panel panel-default")
+                div.panel-heading #{auction.title}
+                .panel-body <strong>Desciption:</strong> #{auction.description}
+                .panel-body <strong>Minimum Bid Amount:</strong> #{auction.min_bids} THB
+                .panel-body <strong>Bid Start:</strong> #{auction.auction_start}
+                .panel-body <strong>Bid End:</strong> #{auction.unavailable_at}
+            
+            if(auction.bids.length > 0)
+                ul.list-group
+                    each val in auction.bids
+                        li.list-group-item
+                            a(href='/auction/'+val._id)=val.price   
+            
+            if(Date.now() >= auction.auction_start)
+                button(type="button", class="btn btn-primary", data-toggle="modal", data-target="#bidModal") Make Bid
+        else
+            p No Content
+        a(href="/auction") Back 
+
+        

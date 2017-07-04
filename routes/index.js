@@ -28,6 +28,9 @@ router.post('/login', passport.authenticate('local'), userCtl.authenticate);
 router.get('/logout', userCtl.logout);
 
 // Auction URL
+router.get('/auction/add', auth.requiresLogin, auctionCtl.add);
+router.post('/auction/create', auth.requiresLogin, auctionCtl.create);
 router.get('/auction', auth.requiresLogin, auctionCtl.list);
+router.get('/auction/:id', auth.requiresLogin, auctionCtl.show);
 
 module.exports = router;

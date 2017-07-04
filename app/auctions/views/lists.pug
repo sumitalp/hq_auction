@@ -1,0 +1,21 @@
+extends ../../views/layout
+
+block content
+    .container
+        h1 Auctionable Items
+        if (auctions.length > 0 && auctions)
+            table(class="table table-responsive table-bordered table-sm")
+                tbody
+                    each val in auctions
+                        tr
+                            td
+                                a(href='/auction/'+val._id)=val.title
+                            td
+                                if(Date.now() >= val.auction_start)
+                                    a(href='/bid/add/'+val._id)
+                                        button(class="btn btn-primary") Make Bid
+                                else
+                                    strong Bid Start at: 
+                                    != val.auction_start
+        else
+            p No Content
