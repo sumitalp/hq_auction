@@ -1,0 +1,22 @@
+extends ../../views/layout
+
+block content
+    .container
+        h1 All bids for #{auction.title} 
+        if (bids.length > 0 && bids)
+            table(class="table table-responsive table-bordered table-sm")
+                tbody
+                    each val, i in bids
+                        tr
+                            td= 10 * page + (i + 1)
+                            td #{val.price} THB
+                            td Bid by #{val.user.username}
+                            td
+                                a(href="/bid/winner/"+val._id, class='win') Is winner?
+            
+            
+            if (pages > 1)
+                ul.pagination
+                      != createPagination(pages, page)
+        else
+            p No Content

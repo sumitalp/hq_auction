@@ -1,0 +1,20 @@
+extends ../../views/layout
+
+block content
+    .container
+        h1 Create Bid
+        br
+        form(role='form', action="/bid/create",method="post", id='bid_create')
+            .form-group
+                label Minimum bid amount #{auction.min_bids} THB
+            .form-group
+                input.form-control(type='number', name="price", placeholder='Price', id='price', required)
+            .form-group
+                input.form-control(type='hidden', name="auction_id", value=auction._id)
+            .form-group
+                input.form-control(type='hidden', name="min_amount", value=auction.min_bids, id='min_amount')
+            button.btn.btn-default(type='submit') Submit
+            |
+            |
+            a(href='/auction')
+                button.btn.btn-primary(type="button") Cancel

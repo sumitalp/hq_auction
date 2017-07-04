@@ -50,19 +50,25 @@ exports.login = function(req, res){
 	res.render(rootPath+'/app/users/views/login', {});
 };
 
-exports.authenticate = function(req, res){
-    // console.log(res.headers);
-	res.format({
-        html: function(){
-            res.redirect('/auction');
-        },
-        json: function(){
-            res.status(200).json({
-                "message": "Login successful.",
-                "redirect_url": "/auction"
-            });
+exports.authenticate = function(req, res, next){
+
+    passport.authenticate('local', function(err, user, info) {
+        // console.log(info);
+      if (err) {
+        console.log(err);
+        return next(err); // will generate a 500 error
+      }
+      if (!user) {
+        return res.redirect('/login');
+      }
+      req.login(user, function(err){
+        if(err){
+          console.log(err);
+          return next(err);
         }
-    });
+        return res.redirect('/auction');
+      });
+    })(req, res, next);
 };
 
 // Logout

@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
 router.get('/register', userCtl.registration);
 router.post('/register', userCtl.create);
 router.get('/login', userCtl.login);
-router.post('/login', passport.authenticate('local'), userCtl.authenticate);
+router.post('/login', userCtl.authenticate);
 router.get('/logout', userCtl.logout);
 
 // Auction URL
