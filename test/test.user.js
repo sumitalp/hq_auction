@@ -32,9 +32,17 @@ describe('User', function() {
             password: 'testy'
         });
 
-        user.save(function(error) {
-            if (error) console.log('error' + error.message);
-            else console.log('no error');
+        // user.save(function(error) {
+        //     if (error) console.log('error' + error.message);
+        //     else console.log('no error');
+        //     done();
+        // });
+        User.register(user, user.password, function(err, new_user){
+            if (err){
+                console.log(err);
+                return done(err);
+                // return res.render(rootPath+'/views/users/register', {user: new_user});
+            }
             done();
         });
     });
@@ -55,7 +63,7 @@ describe('User', function() {
         .expect('Location', '/auction')
         .end(function(err, res){
             if(err) return done(err);
-
+            // console.log(res.headers.location);
             done();
         });
         
@@ -74,20 +82,20 @@ describe('User', function() {
     });
 
     it('login', function(done){
-
+        
         agent
             .post('/login')
             .set('Accept', 'application/json')
             .set('Content-type', 'application/json')
             .send({username: "12345", password: "testy"})
             .expect(302)
-            // .expect('Location', '/auction')
             .end(function(err, res){
                 if(err) return done(err);
                 
                 // agent.saveCookies(res);
+                // console.log(res.headers.location);
 
-                // res.body.should.have.keys('message');
+                res.headers.location.should.eql('/auction');
                 done();
             });
 

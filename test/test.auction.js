@@ -19,9 +19,9 @@ var config = require('../config/config')[env];
 
 describe('Auction', function() {
 
-    before(function() {
+    before(function(done) {
         db = mongoose.connect(config.db);
-        return
+        
         agent
         .post('/register')
         .send({
@@ -30,16 +30,19 @@ describe('Auction', function() {
             email: 'ahsan@example.com'
         })
         .expect(302)
-        .then(function(res){
-          const cookies = res.headers['set-cookie'][0].split(',').map(item => item.split(';')[0]);
-          cookie = cookies.join(';');
-          console.log(res.headers);
-          agent.saveCookies(res);
-        },function(err){
-            console.log(err);
+        .end(function(err, res){
+            if(err) return done(err);
+
+            const cookies = res.headers['set-cookie'][0].split(',').map(item => item.split(';')[0]);
+            cookie = cookies.join(';');
+            // console.log(res.headers);
+            // agent.saveCookies(res);
+            // console.log(cookie);
+            res.headers.location.should.eql('/auction');
+
+            done();
         });
 
-        // done();
     });
 
     after(function(done) {
@@ -74,20 +77,20 @@ describe('Auction', function() {
         });
     });
 
-    it('auction lists url redirects to login', function(){
-        Auction.remove({}, function(){
+    it('auction lists url success', function(){
+        // Auction.remove({}, function(){
             // console.log(agent);
             return agent
                 .get('/auction')
                 .set('Content-type', 'application/json')
                 .then(function(res){
-                    res.should.have.property('status', 302);
-                    res.headers.location.should.eql('/login');
-                    // console.log(res.headers.location);
+                    res.should.have.property('status', 200);
+                    // res.headers.location.should.eql('/login');
+                    // console.log(res.body);
                 }, function(error){
                     console.log(error);
                 });
-        });
+        // });
 
     });
 

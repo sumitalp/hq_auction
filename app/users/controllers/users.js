@@ -59,6 +59,7 @@ exports.authenticate = function(req, res, next){
         return next(err); // will generate a 500 error
       }
       if (!user) {
+        req.flash("message", "Username or password not matched.");
         return res.redirect('/login');
       }
       req.login(user, function(err){
