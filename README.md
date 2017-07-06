@@ -52,8 +52,11 @@ $ NODE_ENV=test make test
 
 ### Special Notes
 
-I admit that, I tried to write some test cases with supertest but somehow I couldn't succeed with  authenticated routing. May be in cases I walked in wrong path.
+~~I admit that, I tried to write some test cases with supertest but somehow I couldn't succeed with  authenticated routing. May be in cases I walked in wrong path.~~
+Now I've fixed authenticated routings issue.
 
 If you want to run and test with you can register, login. For creating 'Auctions' the url is not exposed but you can do with `/auction/add` url.
+Bidding option will open when auction start time arrive. Suppose, one of the auction starts now, then I can see "Make Bid" button of each auction in the "Auctionable Items" list page.
+
  
 
